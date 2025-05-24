@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quotes/viewmodels/quote_viewmodel.dart';
 import 'package:quotes/views/favorites_view.dart';
 import 'package:quotes/views/home_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => QuoteViewModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -28,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: Colors.blueGrey,
           foregroundColor: Colors.white,
         ),
@@ -36,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(_selectedIndex == 0 ? "Alıntılar" : "Favoriler"),
+          title: Text(_selectedIndex == 0 ? 'Alıntılar' : 'Favoriler'),
         ),
         body: IndexedStack(index: _selectedIndex, children: _pages),
         bottomNavigationBar: BottomNavigationBar(
