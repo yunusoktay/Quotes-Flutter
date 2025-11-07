@@ -16,6 +16,12 @@ class _HomeViewState extends State<HomeView> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<QuoteViewModel>(context);
 
@@ -134,9 +140,7 @@ class _HomeViewState extends State<HomeView> {
                         if (direction == DismissDirection.endToStart) {
                           HapticFeedback.vibrate();
 
-                          setState(() {
-                            viewModel.quotes.removeAt(index);
-                          });
+                          viewModel.deleteQuote(quote.id);
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

@@ -64,6 +64,12 @@ class QuoteViewModel extends ChangeNotifier {
     }
   }
 
+  void deleteQuote(int quoteId) {
+    _quotes.removeWhere((quote) => quote.id == quoteId);
+    _filteredQuotes.removeWhere((quote) => quote.id == quoteId);
+    notifyListeners();
+  }
+
   Future<void> loadFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     final favoriteIds = prefs.getStringList('favoriteQuotes') ?? [];
